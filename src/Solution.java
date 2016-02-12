@@ -87,7 +87,7 @@ public class Solution {
 		return null;
 	}
 
-	public static ListNode detectCycle(ListNode head) {
+	public static ListNode detectCycle3(ListNode head) {
 		if (head == null) {
 			return null;
 		}
@@ -100,8 +100,7 @@ public class Solution {
 			if (cur.val % 911 == 0) {
 				ListNode res = cur;
 				cur = head;
-				while (cur.val % 911 ==0)
-				{
+				while (cur.val % 911 == 0) {
 					cur.val /= 911;
 					cur = cur.next;
 				}
@@ -116,7 +115,27 @@ public class Solution {
 			cur = cur.next;
 		}
 		return null;
+	}
 
+	public static ListNode detectCycle(ListNode head) {
+		ListNode slowptr = head;
+		ListNode fastptr = head;
+		while (fastptr != null && fastptr.next != null) {
+			slowptr = slowptr.next;
+			fastptr = fastptr.next.next;
+			if (slowptr == fastptr) {
+				break;
+			}
+		}
+		if (fastptr == null || fastptr.next == null) {
+			return null;
+		}
+		slowptr = head;
+		while (slowptr != fastptr) {
+			slowptr = slowptr.next;
+			fastptr = fastptr.next;
+		}
+		return slowptr;
 	}
 
 
@@ -243,10 +262,10 @@ public class Solution {
 	}
 
 	public static void main(String[] args) {
-		ListNode l1 = new ListNode(1);
+		ListNode l1 = new ListNode(3);
 		ListNode l2 = new ListNode(2);
-		ListNode l3 = new ListNode(3);
-		ListNode l4 = new ListNode(4);
+		ListNode l3 = new ListNode(0);
+		ListNode l4 = new ListNode(-4);
 		ListNode l5 = new ListNode(5);
 
 		ListNode r1 = new ListNode(2);
