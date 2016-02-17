@@ -8,6 +8,57 @@ import java.util.List;
  * Stay Foolish
  */
 public class Solution {
+	public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+		ListNode cur1 = l1;
+		ListNode cur2 = l2;
+		int len1 = 0;
+		int len2 = 0;
+		while (cur1 != null) {
+			len1++;
+			cur1 = cur1.next;
+		}
+		while (cur2 != null) {
+			len2++;
+			cur2 = cur2.next;
+		}
+		if (len2 > len1) {
+			cur2 = l1;
+			cur1 = l2;
+		} else {
+			cur1 = l1;
+			cur2 = l2;
+		}
+
+		while (cur2 != null) {
+			cur1.val += cur2.val;
+			cur2 = cur2.next;
+			cur1 = cur1.next;
+		}
+
+		if (len2 > len1) {
+			cur1 = l2;
+
+		} else {
+			cur1 = l1;
+		}
+		while (cur1 != null) {
+			while (cur1.val >= 10) {
+				if (cur1.next == null) {
+					cur1.next = new ListNode(1);
+				} else {
+					cur1.next.val += 1;
+				}
+				cur1.val -= 10;
+			}
+			cur1 = cur1.next;
+		}
+		if (len2 > len1) {
+			return l2;
+		} else {
+			return l1;
+		}
+	}
+
 	public static ListNode mergeKList(ListNode[] lists) {
 		if (lists == null || lists.length == 0) {
 			return null;
@@ -33,8 +84,7 @@ public class Solution {
 		for (int i = 0; i < temp.size() - 1; i++) {
 			temp.get(i).next = temp.get(i + 1);
 		}
-		if(temp.size() == 0)
-		{
+		if (temp.size() == 0) {
 			return null;
 		}
 		return temp.get(0);
@@ -295,36 +345,22 @@ public class Solution {
 	}
 
 	public static void main(String[] args) {
-		ListNode l1 = new ListNode(3);
-		ListNode l2 = new ListNode(2);
-		ListNode l3 = new ListNode(0);
+		ListNode l1 = new ListNode(1);
+		ListNode l2 = new ListNode(4);
+		ListNode l3 = new ListNode(3);
 		ListNode l4 = new ListNode(-4);
 		ListNode l5 = new ListNode(5);
 
-		ListNode r1 = new ListNode(2);
-		ListNode r2 = new ListNode(4);
-		ListNode r3 = new ListNode(6);
+		ListNode r1 = new ListNode(9);
+		ListNode r2 = new ListNode(9);
+		ListNode r3 = new ListNode(4);
 		ListNode r4 = new ListNode(8);
 
+
 		r1.next = r2;
-
-
-		l1.next = l2;
-		l2.next = l3;
-		l3.next = r3;
-
-		l4.next = l5;
-		l5.next = r4;
-
-		//display(l1);
-		//display(r1);
-		//display1(detectCycle(l1));
-		//display1(detectCycle(l2));
 		display(l1);
-		//display(l4);
 		//display(r1);
-		ListNode[] listNodes = new ListNode[]{l1, l4, r1};
-		display(mergeKList(new ListNode[]{null,null}));
+		display(addTwoNumbers(l1, r1));
 
 		//System.out.print(hasCycle(l2));
 
