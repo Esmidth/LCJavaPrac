@@ -8,6 +8,39 @@ import java.util.List;
  * Stay Foolish
  */
 public class Solution {
+	public static ListNode mergeKList(ListNode[] lists) {
+		if (lists == null || lists.length == 0) {
+			return null;
+		}
+		if (lists.length == 1) {
+			return lists[0];
+		}
+		List<ListNode> temp = new ArrayList<ListNode>();
+		for (int i = 0; i < lists.length; i++) {
+			ListNode cur = lists[i];
+			while (cur != null) {
+				temp.add(cur);
+				cur = cur.next;
+			}
+		}
+		Comparator<ListNode> comparator = new Comparator<ListNode>() {
+			@Override
+			public int compare(ListNode o1, ListNode o2) {
+				return o1.val - o2.val;
+			}
+		};
+		Collections.sort(temp, comparator);
+		for (int i = 0; i < temp.size() - 1; i++) {
+			temp.get(i).next = temp.get(i + 1);
+		}
+		if(temp.size() == 0)
+		{
+			return null;
+		}
+		return temp.get(0);
+	}
+
+
 	public static boolean hasCycle1(ListNode head) {
 		//TLE
 		if (head == null) {
@@ -274,18 +307,24 @@ public class Solution {
 		ListNode r4 = new ListNode(8);
 
 		r1.next = r2;
-		r2.next = r1;
 
 
 		l1.next = l2;
 		l2.next = l3;
-		l3.next = l4;
-		l4.next = l2;
+		l3.next = r3;
+
+		l4.next = l5;
+		l5.next = r4;
 
 		//display(l1);
 		//display(r1);
-		display1(detectCycle(l1));
-		display1(detectCycle(l2));
+		//display1(detectCycle(l1));
+		//display1(detectCycle(l2));
+		display(l1);
+		//display(l4);
+		//display(r1);
+		ListNode[] listNodes = new ListNode[]{l1, l4, r1};
+		display(mergeKList(new ListNode[]{null,null}));
 
 		//System.out.print(hasCycle(l2));
 
