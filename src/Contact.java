@@ -1,4 +1,3 @@
-import junit.framework.*;
 /**
  * Created by Esmidth on 2015/11/25.
  * Stay Hungry, Stay Foolish.
