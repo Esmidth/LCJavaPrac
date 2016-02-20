@@ -4,7 +4,74 @@ import java.util.*;
  * Created by Great Esmidth on 2016/2/4.
  * Stay Foolish
  */
-public class Solution {
+public class LinkedListSolution {
+    public static ListNode partition(ListNode head, int x) {
+        if (head == null) {
+            return null;
+        }
+        if (head.next == null) {
+            return head;
+        }
+        ListNode lessHead;
+        ListNode greatHead;
+        ListNode less = new ListNode(-999);
+        ListNode greater = new ListNode(999);
+        lessHead = less;
+        greatHead = greater;
+        List<ListNode> lists = new ArrayList<>();
+        while (head != null) {
+            lists.add(head);
+            head = head.next;
+        }
+        head = lists.get(0);
+        for (int i = 0; i < lists.size(); i++) {
+            if (lists.get(i).val >= x) {
+                greater.next = lists.get(i);
+                greater = greater.next;
+            } else {
+                less.next = lists.get(i);
+                less = less.next;
+            }
+        }
+        greater.next = null;
+        less.next = greatHead.next;
+        return lessHead.next;
+    }
+
+    public static ListNode reverseKGroup(ListNode head, int k) {
+        ListNode tempHead = new ListNode(-999);
+        ListNode tempH;
+        ListNode temp;
+        Stack<ListNode> stack = new Stack<>();
+        tempHead.next = head;
+        ListNode cur = head;
+        int len = 0;
+        while (cur != null) {
+            len++;
+            cur = cur.next;
+        }
+        cur = tempHead;
+        tempH = tempHead;
+        cur = cur.next;
+        while (len >= k) {
+            for (int i = 0; i < k; i++) {
+                stack.push(cur);
+                cur = cur.next;
+            }
+            temp = cur;
+            cur = tempH;
+            while (!stack.empty()) {
+                cur.next = stack.pop();
+                cur = cur.next;
+            }
+            cur.next = temp;
+            len -= k;
+            tempH = cur;
+            cur = cur.next;
+        }
+        return tempHead.next;
+    }
+
     public static ListNode insertionSortList(ListNode head) {
         if (head == null) {
             return null;
@@ -28,7 +95,7 @@ public class Solution {
         for (int i = 0; i < listNodes.size() - 1; i++) {
             listNodes.get(i).next = listNodes.get(i + 1);
         }
-        listNodes.get(listNodes.size()-1).next = null;
+        listNodes.get(listNodes.size() - 1).next = null;
         return listNodes.get(0);
 
 
@@ -429,12 +496,12 @@ public class Solution {
     }
 
     public static void main(String[] args) {
-        ListNode l1 = new ListNode(4);
-        ListNode l2 = new ListNode(-1);
+        ListNode l1 = new ListNode(1);
+        ListNode l2 = new ListNode(4);
         ListNode l3 = new ListNode(3);
-        ListNode l4 = new ListNode(49);
-        ListNode l5 = new ListNode(2);
-        ListNode l6 = new ListNode(10);
+        ListNode l4 = new ListNode(2);
+        ListNode l5 = new ListNode(5);
+        ListNode l6 = new ListNode(2);
         ListNode l7 = new ListNode(5);
 
         ListNode r1 = new ListNode(1);
@@ -448,7 +515,6 @@ public class Solution {
         l3.next = l4;
         l4.next = l5;
         l5.next = l6;
-        l6.next = l7;
 
         r1.next = r2;
         r2.next = r3;
@@ -457,7 +523,7 @@ public class Solution {
 
         display(l1);
         //display(r1);
-        display(insertionSortList(l7));
+        display(partition(null, 3));
 
         //System.out.print(hasCycle(l2));
 
