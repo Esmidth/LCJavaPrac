@@ -1,3 +1,5 @@
+package Leetcode;
+
 /**
  * Created by Great Esmidth on 2016/2/4.
  * Stay Foolish

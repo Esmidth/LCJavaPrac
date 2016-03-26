@@ -1,3 +1,5 @@
+package Leetcode;
+
 import java.util.*;
 
 /**
@@ -5,6 +7,69 @@ import java.util.*;
  * Stay Foolish
  */
 public class Linked_List_Solution {
+	public static TreeNode sortedListToBST(ListNode head) {
+		return null;
+	}
+
+	public static ListNode rotateRight(ListNode head, int k) {
+		if (head == null) {
+			return null;
+		}
+		if (head.next == null) {
+			return head;
+		}
+		if (k == 0) {
+			return head;
+		}
+		List<ListNode> listNodes = new ArrayList<>();
+		ListNode cur = head;
+		while (cur != null) {
+			listNodes.add(cur);
+			cur = cur.next;
+		}
+		while (k >= listNodes.size()) {
+			k = k - listNodes.size();
+		}
+		if (k == 0) {
+			return head;
+		}
+		int end = listNodes.size() - 1;
+		int cur1 = end - k + 1;
+		listNodes.get(cur1 - 1).next = null;
+		listNodes.get(end).next = listNodes.get(0);
+		return listNodes.get(cur1);
+	}
+
+	public static void reorderList(ListNode head) {
+		if (head == null) {
+			return;
+		}
+		if (head.next == null) {
+			return;
+		}
+		List<ListNode> listNodes = new ArrayList<>();
+		ListNode cur = head;
+		while (cur != null) {
+			listNodes.add(cur);
+			cur = cur.next;
+		}
+		int front = 0;
+		int end = listNodes.size() - 1;
+		while (true) {
+			listNodes.get(front).next = listNodes.get(end);
+			front++;
+			if (front == end) {
+				break;
+			}
+			listNodes.get(end).next = listNodes.get(front);
+			end--;
+			if (front == end) {
+				break;
+			}
+		}
+		listNodes.get(end).next = null;
+	}
+
 	public static ListNode reverseBetween(ListNode head, int m, int n) {
 		ArrayList<ListNode> list = new ArrayList<>();
 		if (head == null || m == 0 || n == 0 || m > n) {
@@ -461,6 +526,7 @@ public class Linked_List_Solution {
 	public static void main(String[] args) {
 		ListNode l1 = new ListNode(1);
 		ListNode l2 = new ListNode(2);
+
 		ListNode l3 = new ListNode(3);
 		ListNode l4 = new ListNode(4);
 		ListNode l5 = new ListNode(5);
@@ -475,8 +541,7 @@ public class Linked_List_Solution {
 
 
 		l1.next = l2;
-		l2.next = l3;
-		l3.next = l4;
+
 		l4.next = l5;
 
 		l6.next = l7;
@@ -488,7 +553,7 @@ public class Linked_List_Solution {
 
 		display(l1);
 		//display(r1);
-		display(reverseBetween(l1, 2, 4));
+		display(rotateRight(l1, 3));
 
 		//System.out.print(hasCycle(l2));
 
