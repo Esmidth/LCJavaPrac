@@ -8,7 +8,33 @@ import java.util.*;
  */
 public class Linked_List_Solution {
 	public static TreeNode sortedListToBST(ListNode head) {
+		List<ListNode> listNodes = new ArrayList<>();
+
+		ListNode cur = head;
+		while (cur != null) {
+			listNodes.add(cur);
+			cur = cur.next;
+		}
+		int n = 0;
+		while ((int) Math.pow(2, n) - 1 < listNodes.size()) {
+			n++;
+		}
+		TreeNode root = new TreeNode(0);
+		List<TreeNode> treeNodes = new ArrayList<>();
+		for (int i = 0; i < listNodes.size() - 2; i++) {
+			treeNodes.add(new TreeNode(1));
+		}
 		return null;
+	}
+
+	public static TreeNode generateBST(int level) {
+		TreeNode root = new TreeNode(0);
+		if (level == 1) {
+			return root;
+		}
+		root.left = generateBST(level - 1);
+		root.right = generateBST(level - 1);
+		return root;
 	}
 
 	public static ListNode rotateRight(ListNode head, int k) {
@@ -443,6 +469,19 @@ public class Linked_List_Solution {
 		System.out.println();
 	}
 
+	public static void display(TreeNode root) {
+		if (root == null) {
+			System.out.println("FUCKING A NULL POINTER");
+		}
+		List<List<Integer>> lists = Binary_Tree_Solution.levelOrder(root);
+		for (int i = 0; i < lists.size(); i++) {
+			for (int j = 0; j < lists.get(i).size(); j++) {
+				System.out.print(lists.get(i).get(j)+",");
+			}
+			System.out.println();
+		}
+	}
+
 	public static void display1(ListNode node) {
 		if (node == null) {
 			System.out.println("FUCKING A NULL POINTER");
@@ -523,6 +562,49 @@ public class Linked_List_Solution {
 		return head;
 	}
 
+	public static void testTreeNode() {
+		TreeNode root = new TreeNode(8);
+		TreeNode n4 = new TreeNode(4);
+		TreeNode n12 = new TreeNode(12);
+		TreeNode n2 = new TreeNode(2);
+		TreeNode n6 = new TreeNode(6);
+		TreeNode n10 = new TreeNode(10);
+		TreeNode n14 = new TreeNode(14);
+		TreeNode n1 = new TreeNode(1);
+		TreeNode n3 = new TreeNode(3);
+		TreeNode n5 = new TreeNode(5);
+		TreeNode n7 = new TreeNode(7);
+		TreeNode n9 = new TreeNode(9);
+		TreeNode n11 = new TreeNode(11);
+		TreeNode n13 = new TreeNode(13);
+		TreeNode n15 = new TreeNode(15);
+
+		root.left = n4;
+		root.right = n12;
+
+		n2.left = n1;
+		n2.right = n3;
+
+		n6.left = n5;
+		n6.right = n7;
+
+		n4.left = n2;
+		n4.right = n6;
+
+		n10.left = n9;
+		n10.right = n11;
+
+		n14.left = n13;
+		n14.right = n15;
+
+		n12.left = n10;
+		n12.right = n14;
+
+		display(root);
+
+
+	}
+
 	public static void main(String[] args) {
 		ListNode l1 = new ListNode(1);
 		ListNode l2 = new ListNode(2);
@@ -550,10 +632,7 @@ public class Linked_List_Solution {
 		r2.next = r3;
 		r3.next = r4;
 
-
-		display(l1);
-		//display(r1);
-		display(rotateRight(l1, 3));
+		testTreeNode();
 
 		//System.out.print(hasCycle(l2));
 
