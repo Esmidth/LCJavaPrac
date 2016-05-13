@@ -31,6 +31,87 @@ public class Binary_Tree_Solution {
         }
     }
 
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> integerList = new ArrayList<>();
+        if (root == null) {
+            return integerList;
+        }
+        TreeNode cur = root;
+        sub_postorderTraversal(cur, integerList);
+        return integerList;
+    }
+
+    public static void sub_postorderTraversal(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            sub_postorderTraversal(root.left, list);
+        }
+        if (root.right != null) {
+            sub_postorderTraversal(root.right, list);
+        }
+        list.add(root.val);
+    }
+
+    public static List<Integer> inorderTraversal(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<Integer> integerList = new ArrayList<>();
+        sub_inorderTraversal(root, integerList);
+        return integerList;
+    }
+
+    public static void sub_inorderTraversal(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            sub_inorderTraversal(root.left, list);
+        }
+        list.add(root.val);
+        if (root.right != null) {
+            sub_inorderTraversal(root.right, list);
+        }
+    }
+
+    public static List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) {
+            return new ArrayList<>();
+        }
+        List<List<Integer>> lists = new ArrayList<List<Integer>>();
+        sub_zigzag(root, lists, 0);
+        List<List<Integer>> lists2 = new ArrayList<>();
+        for (int i = 0; i < lists.size(); i++) {
+            if (i % 2 != 0) {
+                List<Integer> temp = new ArrayList<Integer>();
+                for (int j = lists.get(i).size() - 1; j >= 0; j--) {
+                    temp.add(lists.get(i).get(j));
+                }
+                lists2.add(temp);
+            } else {
+                lists2.add(lists.get(i));
+            }
+        }
+        return lists2;
+    }
+
+    public static void sub_zigzag(TreeNode node, List<List<Integer>> lists, int level) {
+        if (node != null) {
+            if (lists.size() <= level) {
+                lists.add(new ArrayList<Integer>());
+            }
+            lists.get(level).add(node.val);
+            if (node.left != null) {
+                sub_zigzag(node.left, lists, level + 1);
+            }
+            if (node.right != null) {
+                sub_zigzag(node.right, lists, level + 1);
+            }
+        }
+    }
+
 
     public static List<List<Integer>> levelOrder(TreeNode root) {
         if (root == null) {
@@ -124,7 +205,7 @@ public class Binary_Tree_Solution {
     }
 
     public static void main(String[] args) {
-        TreeNode root = new TreeNode('F' - 'A');
+        TreeNode root = new TreeNode(8);
         TreeNode l11 = new TreeNode('B' - 'A');
         TreeNode l12 = new TreeNode('G' - 'A');
         TreeNode l21 = new TreeNode('A' - 'A');
@@ -144,12 +225,27 @@ public class Binary_Tree_Solution {
         l22.right = l32;
         l23.left = l33;
 
-        List<Integer> a = preorderTraversal(root);
+        /*
+        List<List<Integer>> a = zigzagLevelOrder(l22);
+
         for (int i = 0; i < a.size(); i++) {
-            System.out.print((char) (a.get(i) + 'A'));
+            for (int j = 0; j < a.get(i).size(); j++) {
+                System.out.print((char) (a.get(i).get(j) + 'A'));
+                System.out.print(" ");
+            }
+            System.out.println();
+        }
+        */
+        List<Integer> list = new ArrayList<>();
+        BSTIterator i = new BSTIterator(root);
+        list.add(i.next());
+        while (i.hasNext()) {
+            list.add(i.next());
+        }
+        for (int j = 0; j < list.size(); j++) {
+            System.out.print((char) (list.get(j) + 'A'));
             System.out.print(" ");
         }
-
 
     }
 
